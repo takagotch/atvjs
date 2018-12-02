@@ -135,10 +135,10 @@ ATV.Page.create({
 });
 ATV.Navigation.navigate('login', {username: 'emadalam', password: '123456'});
 
-let SearchPage = ATV.create(/**/);
-let Homepage = ATV.Page.create(/**/);
-let MoviesPage = ATV.Page.create(/**/);
-let TVShowPage = ATV.Page.create(/**/);
+let SearchPage = ATV.create({/**/});
+let Homepage = ATV.Page.create({/**/});
+let MoviesPage = ATV.Page.create({/**/});
+let TVShowPage = ATV.Page.create({/**/});
 ATV.Menu.create({
   attributes: {},
   rootTemplateAttributes {},
@@ -181,10 +181,57 @@ const errorTpl = () => ``;
 let globalStyles = ``'
 ATV.start({
   style: globalStyles,
-  menu: {},
-  templates: {},
-  handlers: {},
-  onLaunch(options){}
+  menu: {
+    attributes: {},
+    items: [{
+      attributes: {},
+      items: [{
+        id: 'search',
+        name: 'Search',
+        page: SearchPage
+      }, {
+          id: 'homepage',
+          name: 'Home',
+          page: HomePage,
+          attributes: {
+            autoHighlight: true
+        }, {
+          id: 'movies',
+          name: 'Movies',
+          page: MoviesPage
+        }, {
+          id: 'tvshows',
+          name: 'TV Shows',
+          page: TVShowsPage
+      }]
+  },
+  templates: {
+    loader: loaderTpl,
+    error: errorTpl,
+    status: {
+      '404': () => errorTpl({
+        title: '404',
+        message: 'The given page was not found'
+      }),
+      '500': () => errorTpl({
+        title: '500',
+        message: 'An unknown error occurred, please try again later!'
+      })
+    }
+  },
+  handlers: {
+    select: {
+      globalSelecthandler(e){
+        let elment e.target;
+        let someElementTypeCheck = element.getAttribute('data-my-attribute');
+        if(elementTypeCheck){
+         } 
+      }
+    }
+  },
+  onLaunch(options){
+    ATV.Navigation.navigateToMenuPage();
+  }
 });
 ```
 
